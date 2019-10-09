@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <title>Take a Hike</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'take_a_hike_app/css/style.css' %}">
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light static-top mb-5 shadow">
+        <div class="container">
+        <a class="navbar-brand" href="#">Take a Hike</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/login">Login
+                    <span class="sr-only">(current)</span>
+                    </a>
+            </li>
+            </ul>
+        </div>
+        </div>
+    </nav>
+    <!-- Page Content -->
+    <div class="container">
+        <div class="card border-0 shadow my-5">
+          <div class="card-body p-5">
+            <h1 class="font-weight-light">Welcome to Take a Hike!</h1>
+            <p class="lead">Please create an account.</p>
+            <div class="row">
+                    {% if messages %}
+                    <ul class="messages">
+                      {% for message in messages %} {% if "register" in message.tags %}
+                      <div class="alert alert-{{ message.level_tag }}">
+                        <li>{{ message }}</li>
+                      </div>
+                      {% endif %} {% endfor %}
+                    </ul>
+                    {% endif %}
+                  </div>
+                  <form action="/register" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                      <label for="inputFirstName">First Name</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="inputFirstName"
+                        name="first_name"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="inputLastName">Last Name</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="inputLastName"
+                        name="last_name"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="inputEmail">Email</label>
+                      <input
+                        type="email"
+                        class="form-control"
+                        id="inputEMail"
+                        name="email"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="inputPassword">Password</label>
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="inputPassword"
+                        name="password"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="inputConfirmPW">Confirm Password</label>
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="inputConfirmPW"
+                        name="confirm_pw"
+                      />
+                    </div>
+                    <button type="submit" class="btn btn-info" name="register">
+                      Register
+                    </button>
+                  </form>
+                <div class="row" style="margin-top: 30px;">
+                    <p class="lead">Already have an account? <a href="/login">Please login here.</a></p>
+                </div>    
+            <!-- <div style="height: 50px"></div> -->
+          </div>
+        </div>
+      </div>
+  </body>
+</html>

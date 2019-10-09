@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <title>Take a Hike</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'take_a_hike_app/css/style.css' %}">
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light static-top mb-5 shadow">
+            <div class="container">
+            <a class="navbar-brand" href="#">Welcome {{ request.session.name }}... go Take a Hike!</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/trailhead">Trailhead
+                        <span class="sr-only">(current)</span>
+                        </a>
+                </li>
+                <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                      </li>
+                </ul>
+            </div>
+            </div>
+        </nav>
+    <!-- Page Content -->
+    <div class="container">
+        <div class="card border-0 shadow my-5" style="width: 700px;">
+            <div class="card-body p-5">
+                <h2 class="font-weight-light">Plan a New Trip</h2>
+                <div class="row">
+                    <form action="/create_trip" method="POST">
+                    {% csrf_token %}
+                        <input type="hidden" name="user" value="{{request.session.user_id}}">
+                        <div class="form-group">
+                            <label for="inputName">Name</label>
+                            <input type="text" class="form-control" id="inputName" name="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputLocation">Location</label>
+                            <input type="text" class="form-control" id="inputLocation" name="location">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputDate">Start Date:</label>
+                            <input type="date" class="form-control" id="inputDate" name="date">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputLength"># of Nights</label>
+                            <input type="text" class="form-control" id="inputLength" name="length">
+                        </div>
+                            <button type="submit" class="btn btn-info" name="create">Create</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>

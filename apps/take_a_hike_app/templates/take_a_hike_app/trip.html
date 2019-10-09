@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <title>Take a Hike</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'take_a_hike_app/css/style.css' %}">
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light static-top mb-5 shadow">
+            <div class="container">
+            <a class="navbar-brand" href="#">Welcome {{ request.session.name }}... go Take a Hike!</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/trailhead">Trailhead
+                        <span class="sr-only">(current)</span>
+                        </a>
+                </li>
+                <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                      </li>
+                </ul>
+            </div>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="row">
+                <div class="col-8">
+                    <div class="card border-0 shadow my-1">
+                        <div class="card body p-5">
+                            <a style="text-align: end;" href="/cancel_trip/{{trip.id}}">Cancel Trip</a>
+                            <h3 class="font-weight-light">{{ trip.name }}</h3>
+                            <ul>
+                                <li>Location: {{ trip.location }}</li>
+                                <li>Start Date: {{ trip.date }}</li>
+                                <li>Length: {{ trip.length}} nights</li>
+                                <li>Hikers:
+                                    <ul>
+                                        {% for user in trip.users.all %}
+                                        <li>{{ user.first_name }} {{ user.last_name }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card border-0 shadow my-1">
+                        <div class="card body p-4">
+                            <h4 class="font-weight-light">Add a Hiker:</h4>
+                            <form action="/add_hiker" method="POST">
+                                {% csrf_token %}
+                                <select name="this_user">
+                                {% for user in all_users %}
+                                    <option value="{{user.id}}">{{ user.first_name }} {{ user.last_name }}</option>
+                                {% endfor %}
+                                </select>
+                                <input type="hidden" name="this_trip" value="{{trip.id}}">
+                                <input type="submit" value="Add">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
